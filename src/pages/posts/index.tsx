@@ -1,3 +1,14 @@
-export default function PostList() {
-  return <h1>Post List Page</h1>;
+import React from "react";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import PostList from "../../components/PostList";
+
+export default function PostListPage() {
+  return (
+    <>
+      <Header />
+      <PostList hasNavigation={false} />
+      <Footer />
+    </>
+  );
 }
