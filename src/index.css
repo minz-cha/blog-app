@@ -142,10 +142,17 @@ footer a:hover {
   color: gray;
 }
 
+.post__delete,
+.post__edit {
+  cursor: pointer;
+}
+
 .post__delete:hover,
 .post__delete:focus,
 .post__edit:hover,
-.post__edit:focus {
+.post__edit:focus,
+.post__edit a:hover,
+.post__edit a:focus {
   color: black;
 }
 
@@ -168,6 +175,11 @@ footer a:hover {
 
 .post__detail .post__text {
   padding: 20px 0px;
+}
+
+.post__edit a {
+  text-decoration: none;
+  color: gray;
 }
 
 /* profile */
