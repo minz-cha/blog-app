@@ -16,7 +16,8 @@ export default function SignupForm() {
       const auth = getAuth(app);
       await createUserWithEmailAndPassword(auth, email, password);
       toast.success("회원가입에 성공하였습니다.");
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error?.code);
       console.log(error);
     }
   };
@@ -112,7 +113,12 @@ export default function SignupForm() {
         </Link>
       </div>
       <div className="form__block">
-        <input type="submit" value="회원가입" className="form__btn-submit" />
+        <input
+          type="submit"
+          value="회원가입"
+          className="form__btn-submit"
+          disabled={error?.length > 0}
+        />
       </div>
     </form>
   );
