@@ -1,3 +1,15 @@
-export default function SignUpPage() {
-  return <h1>SignUP</h1>;
+import React from "react";
+import Header from "components/Header";
+import SignupForm from "components/SignupForm";
+
+export default function LoginPage() {
+  return (
+    <>
+      <Header />
+      <SignupForm />
+      <br />
+      <br />
+      <br />
+    </>
+  );
 }

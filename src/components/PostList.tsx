@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface PostListProps {
-  hasNavigation?: boolean;
+  hasNavigation?: boolean; //true
 }
 
 type TabType = "all" | "my";
