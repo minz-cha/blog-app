@@ -17,11 +17,11 @@ export default function PostForm() {
     e.preventDefault();
     try {
       //firestore로 데이터 생성
-      await addDoc(collection(db, "post"), {
+      await addDoc(collection(db, "posts"), {
         title: title,
         summary: summary,
         content: content,
-        createAt: new Date()?.toLocaleDateString(),
+        createdAt: new Date()?.toLocaleDateString(),
         email: user?.email,
       });
       toast?.success("게시글을 생성하였습니다.");
