@@ -10,8 +10,9 @@ interface PostListProps {
 
 type TabType = "all" | "my";
 
-interface PostProps {
-  id: string;
+//Firebase Firestore에서 데이터를 가져올 때, id를 갖지 않을 수 있음
+export interface PostProps {
+  id?: string;
   email: string;
   title: string;
   summary: string;
@@ -68,7 +69,7 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
                   <div className="post__date">{post?.createdAt}</div>
                 </div>
                 <div className="post__title">{post?.title}</div>
-                <div className="post__text">{post?.content}</div>
+                <div className="post__text">{post?.summary}</div>
               </Link>
               {post?.email === user?.email && (
                 <div className="post__utils-box">
