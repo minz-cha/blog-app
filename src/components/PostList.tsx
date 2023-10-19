@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { db } from "firebaseApp";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  query,
+  orderBy,
+  where,
+} from "firebase/firestore";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 
 interface PostListProps {
   hasNavigation?: boolean; //true
+  defaultTab?: TabType;
 }
 
 type TabType = "all" | "my";
@@ -23,14 +32,30 @@ export interface PostProps {
   uid: string;
 }
 
-export default function PostList({ hasNavigation = true }: PostListProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("all");
+export default function PostList({
+  hasNavigation = true,
+  defaultTab = "all",
+}: PostListProps) {
+  const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
   const [posts, setPosts] = useState<PostProps[]>([]);
   const { user } = useContext(AuthContext);
 
   const getPosts = async () => {
-    const datas = await getDocs(collection(db, "posts"));
+    //posts 정렬
     setPosts([]);
+    let postsRef = collection(db, "posts");
+    let postsQuery;
+
+    if (activeTab === "my" && user) {
+      postsQuery = query(
+        postsRef,
+        where("uid", "==", user.uid),
+        orderBy("createdAt", "desc")
+      );
+    } else {
+      postsQuery = query(postsRef, orderBy("createdAt", "desc"));
+    }
+    const datas = await getDocs(postsQuery);
     datas?.forEach((doc) => {
       const dataObj = { ...doc.data(), id: doc.id };
       setPosts((prev) => [...prev, dataObj as PostProps]);
@@ -49,7 +74,7 @@ export default function PostList({ hasNavigation = true }: PostListProps) {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [activeTab]);
 
   return (
     <>
