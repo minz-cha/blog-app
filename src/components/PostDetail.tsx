@@ -44,16 +44,19 @@ export default function PostDetail() {
             <div className="post__author-name">{post?.email}</div>
             <div className="post__date">{post?.createdAt}</div>
           </div>
-          {post?.email === user?.email && (
-            <div className="post__utils-box">
-              <div className="post__delete" onClick={handleDelete}>
-                삭제
-              </div>
-              <div className="post__edit">
-                <Link to={`/posts/edit/${post?.id}`}>수정</Link>
-              </div>
+          {/* {post?.email === user?.email && ( */}
+          <div className="post__utils-box">
+            {post?.category && (
+              <div className="post__category">{post?.category}</div>
+            )}
+            <div className="post__delete" onClick={handleDelete}>
+              삭제
             </div>
-          )}
+            <div className="post__edit">
+              <Link to={`/posts/edit/${post?.id}`}>수정</Link>
+            </div>
+          </div>
+          {/* )} */}
           <div className="post__text post__text-pre-wrap">{post?.content}</div>
         </div>
       </div>
