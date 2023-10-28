@@ -18,6 +18,13 @@ interface PostListProps {
   defaultTab?: TabType | CategoryType;
 }
 
+export interface CommentsInterface {
+  content: string;
+  uid: string;
+  email: string;
+  createdAt: string;
+}
+
 //Firebase Firestore에서 데이터를 가져올 때, id를 갖지 않을 수 있음
 export interface PostProps {
   id?: string;
@@ -29,6 +36,7 @@ export interface PostProps {
   updatedAt?: string;
   uid: string;
   category?: CategoryType;
+  comments?: CommentsInterface[];
 }
 
 type TabType = "all" | "my";

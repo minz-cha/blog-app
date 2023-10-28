@@ -5,6 +5,7 @@ import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "firebaseApp";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
+import Comments from "components/Comments";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
@@ -14,6 +15,7 @@ export default function PostDetail() {
 
   const getPost = async (id: string) => {
     if (id) {
+      //document의 data 불러옴
       const docRef = doc(db, "posts", id);
       const docSnap = await getDoc(docRef);
 
@@ -44,21 +46,23 @@ export default function PostDetail() {
             <div className="post__author-name">{post?.email}</div>
             <div className="post__date">{post?.createdAt}</div>
           </div>
-          {/* {post?.email === user?.email && ( */}
-          <div className="post__utils-box">
-            {post?.category && (
-              <div className="post__category">{post?.category}</div>
-            )}
-            <div className="post__delete" onClick={handleDelete}>
-              삭제
+          {post?.email === user?.email && (
+            <div className="post__utils-box">
+              {post?.category && (
+                <div className="post__category">{post?.category}</div>
+              )}
+              <div className="post__delete" onClick={handleDelete}>
+                삭제
+              </div>
+              <div className="post__edit">
+                <Link to={`/posts/edit/${post?.id}`}>수정</Link>
+              </div>
             </div>
-            <div className="post__edit">
-              <Link to={`/posts/edit/${post?.id}`}>수정</Link>
-            </div>
-          </div>
-          {/* )} */}
+          )}
           <div className="post__text post__text-pre-wrap">{post?.content}</div>
         </div>
+        {/* 댓글이 변경되었을 때 변경된 data를 불러올 수 있도록 getPost 추가 */}
+        <Comments post={post} getPost={getPost} />
       </div>
     </>
   );
