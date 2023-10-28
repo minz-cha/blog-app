@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "firebaseApp";
-import { PostProps } from "./PostList";
+import { CommentsInterface, PostProps } from "./PostList";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 
@@ -63,6 +63,19 @@ export default function Comments({ post, getPost }: CommentsProps) {
     }
   };
 
+  const handleDeleteComment = async (data: CommentsInterface) => {
+    const confirm = window.confirm("해당 댓글을 삭제하시겠습니까?");
+    if (confirm && post?.id) {
+      const postRef = doc(db, "posts", post?.id);
+      await updateDoc(postRef, {
+        comments: arrayRemove(data),
+      });
+      toast.success("댓글이 삭제되었습니다.");
+      //doc 업데이트
+      await getPost(post.id);
+    }
+  };
+
   return (
     <div className="comments">
       <form className="comments__form" onSubmit={onSubmit}>
@@ -86,7 +99,14 @@ export default function Comments({ post, getPost }: CommentsProps) {
             <div className="comment__profile-box">
               <div className="comment__email">{comment?.email}</div>
               <div className="comment__date">{comment?.createdAt}</div>
-              <div className="comment__delete">삭제</div>
+              {comment.uid === user?.uid && (
+                <div
+                  className="comment__delete"
+                  onClick={() => handleDeleteComment(comment)}
+                >
+                  삭제
+                </div>
+              )}
             </div>
             <div className="comment__text">{comment?.content}</div>
           </div>
