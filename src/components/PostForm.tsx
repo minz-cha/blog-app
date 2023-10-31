@@ -159,6 +159,7 @@ export default function PostForm() {
           value={content}
         />
       </div>
+
       <div className="form__block">
         <input type="submit" value="제출" className="form__btn-submit" />
       </div>

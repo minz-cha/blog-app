@@ -25,6 +25,13 @@ export interface CommentsInterface {
   createdAt: string;
 }
 
+export interface LikeInterface {
+  content: string;
+  uid: string;
+  email: string;
+  createdAt: string;
+}
+
 //Firebase Firestore에서 데이터를 가져올 때, id를 갖지 않을 수 있음
 export interface PostProps {
   id?: string;
@@ -37,9 +44,11 @@ export interface PostProps {
   uid: string;
   category?: CategoryType;
   comments?: CommentsInterface[];
+  like?: number;
+  likePost?: LikeInterface[];
 }
 
-type TabType = "all" | "my";
+type TabType = "all" | "my" | "like";
 
 export type CategoryType = "Frontend" | "Backend" | "Web" | "Mobile";
 export const CATEGORIES: CategoryType[] = [
@@ -73,6 +82,14 @@ export default function PostList({
       );
     } else if (activeTab === "all") {
       postsQuery = query(postsRef, orderBy("createdAt", "desc"));
+    } else if (activeTab === "like" && user) {
+      postsQuery = query(
+        postsRef,
+        where("likePost", "array-contains", {
+          uid: user.uid,
+        }),
+        orderBy("createdAt", "desc")
+      );
     } else {
       postsQuery = query(
         postsRef,

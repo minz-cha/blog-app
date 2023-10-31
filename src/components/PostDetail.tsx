@@ -6,6 +6,7 @@ import { db } from "firebaseApp";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 import Comments from "components/Comments";
+import LikeButton from "./LikeButton";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
@@ -62,6 +63,7 @@ export default function PostDetail() {
           <div className="post__text post__text-pre-wrap">{post?.content}</div>
         </div>
         {/* 댓글이 변경되었을 때 변경된 data를 불러올 수 있도록 getPost 추가 */}
+        {/* <LikeButton post={post}/> */}
         <Comments post={post} getPost={getPost} />
       </div>
     </>

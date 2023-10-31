@@ -5,6 +5,7 @@ import { CommentsInterface, PostProps } from "./PostList";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 
+// comments달 게시글(post)의 속성을 받는 코드
 interface CommentsProps {
   post: PostProps | null;
   getPost: (id: string) => Promise<void>;

@@ -358,6 +358,16 @@ footer a:hover {
   animation: rotation 1s linear infinite;
 }
 
+/* like button */
+.like__button {
+  display: flex;
+}
+
+.like__button:hover,
+.like__button:focus {
+  color: #1945a4;
+}
+
 /* comments */
 .comments {
   width: 100%;

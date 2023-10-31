@@ -9,7 +9,8 @@ export default function ProfilePage() {
     <>
       <Header />
       <Profile />
-      <PostList hasNavigation={false} defaultTab="my" />
+      {/* <PostList hasNavigation={false} defaultTab="my" /> */}
+      <PostList hasNavigation={false} defaultTab="like" />
       <Footer />
     </>
   );
