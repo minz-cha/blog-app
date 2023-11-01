@@ -1,34 +1,111 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  addDoc,
+  updateDoc,
+  collection,
+} from "firebase/firestore";
+import { db } from "firebaseApp";
 import AuthContext from "context/AuthContext";
 import { LikeInterface, PostProps } from "./PostList";
 
 import { Button } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { User } from "firebase/auth";
 
+// 좋아요 누를 게시글(post)의 속성을 받는 코드
 interface LikeButtonProps {
   post: PostProps | null;
-  onLike: (id?: PostProps) => void;
+  getPost: (id: string) => Promise<void>;
+  user: User | null;
 }
 
-export default function LikeButton({ post, onLike }: LikeButtonProps) {
-  const { user } = useContext(AuthContext);
-  const [likeButton, setLikeButton] = useState<boolean>(false);
-  const [likedPosts, setLikedPosts] = useState<string[]>();
+export default function LikeButton({ post, getPost, user }: LikeButtonProps) {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  // const [likePost, setLikePost] = useState([]);
 
-  //   const handleLikeButton = () => {
-  //     const updatedPost = { ...post, like: post.like + 1 };
-  //     onLike(updatedPost);
-  //     setLikeButton(true);
-  //   };
+  // const handleLike = async () => {
+  //   if (post && post.id && user) {
+
+  //     if (!isLiked) {
+  //       // 좋아요 추가
+  //       console.log("좋아요 완료");
+  //       const likeData = {
+  //         uid: user.uid,
+  //         content: post.id,
+  //       };
+  //       const likeRef = await addDoc(collection(db, "likes"), likeData);
+
+  //       const postRef = doc(db, "posts", post.id);
+  //       await updateDoc(postRef, {
+  //         like: post.like + 1,
+  //         likePost: [{ id: likeRef.id, ...likeData }],
+  //       });
+  //       setIsLiked(true);
+  //       await getPost(post.id);
+  //     } else {
+  //       console.log("좋아요 취소 완료");
+  //       const postRef = doc(db, "posts", post.id);
+  //       await updateDoc(postRef, {
+  //         like: post.like - 1,
+  //         // likePost: arrayUnion(likeData),
+  //         // likePost: post.likePost.filter((like) => like.uid == user.uid),
+  //       });
+  //       setIsLiked(false);
+  //       await getPost(post.id);
+  //     }
+  //   }
+
+  const handleLike = async () => {
+    if (post) {
+      if (post.likePostList === undefined) {
+        post.likePostList = [];
+      }
+
+      if (user && post && post.id) {
+        const postRef = doc(db, "posts", post.id);
+        const likedBy = post.likePostList.map((like) => like.uid);
+
+        if (likedBy.includes(user.uid)) {
+          console.log("좋아요 취소 완료");
+          await updateDoc(postRef, {
+            like: post.like - 1,
+            likePostList: post.likePostList.filter(
+              (like) => like.uid !== user.uid
+            ),
+          });
+          setIsLiked(true);
+          await getPost(post.id);
+        } else {
+          console.log("좋아요 완료");
+          await updateDoc(postRef, {
+            like: post.like + 1,
+            likePostList: [
+              ...post.likePostList,
+              {
+                uid: user.uid,
+                email: user.email,
+                createdAt: new Date().toISOString(),
+              },
+            ],
+          });
+          setIsLiked(true);
+          await getPost(post.id);
+        }
+      }
+    }
+  };
 
   return (
     <div className="like__button">
       <Button
         variant="outlined"
         startIcon={<FavoriteBorderIcon />}
-        // onClick={handleLikeButton}
+        onClick={() => handleLike()}
       >
-        Like it!
+        {post?.like}
       </Button>
     </div>
   );

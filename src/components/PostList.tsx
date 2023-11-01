@@ -25,14 +25,11 @@ export interface CommentsInterface {
   createdAt: string;
 }
 
+// Like 누른 게시글 목록 저장
 export interface LikeInterface {
-  content: string;
   uid: string;
-  email: string;
-  createdAt: string;
 }
 
-//Firebase Firestore에서 데이터를 가져올 때, id를 갖지 않을 수 있음
 export interface PostProps {
   id?: string;
   email: string;
@@ -44,8 +41,8 @@ export interface PostProps {
   uid: string;
   category?: CategoryType;
   comments?: CommentsInterface[];
-  like?: number;
-  likePost?: LikeInterface[];
+  like: 0;
+  likePostList?: LikeInterface[];
 }
 
 type TabType = "all" | "my" | "like";
@@ -74,20 +71,21 @@ export default function PostList({
     let postsRef = collection(db, "posts");
     let postsQuery;
 
+    // 내 게시글
     if (activeTab === "my" && user) {
       postsQuery = query(
         postsRef,
         where("uid", "==", user.uid),
         orderBy("createdAt", "desc")
       );
-    } else if (activeTab === "all") {
+    } // 모든 게시글
+    else if (activeTab === "all") {
       postsQuery = query(postsRef, orderBy("createdAt", "desc"));
-    } else if (activeTab === "like" && user) {
+    } // 좋아요 누른 게시글
+    else if (activeTab === "like" && user) {
       postsQuery = query(
         postsRef,
-        where("likePost", "array-contains", {
-          uid: user.uid,
-        }),
+        where("likePostList.index", "==", 0),
         orderBy("createdAt", "desc")
       );
     } else {
@@ -135,6 +133,13 @@ export default function PostList({
             className={activeTab === "my" ? "post__navigation-active" : ""}
           >
             나의 글
+          </div>
+          <div
+            role="presentation"
+            onClick={() => setActiveTab("like")}
+            className={activeTab === "like" ? "post__navigation-active" : ""}
+          >
+            좋아요
           </div>
           {CATEGORIES?.map((category) => (
             <div

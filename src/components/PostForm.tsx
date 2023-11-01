@@ -49,6 +49,7 @@ export default function PostForm() {
           email: user?.email,
           uid: user?.uid,
           category: category,
+          like: 0,
         });
 
         toast?.success("게시글을 생성하였습니다.");

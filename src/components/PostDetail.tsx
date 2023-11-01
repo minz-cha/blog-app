@@ -24,6 +24,16 @@ export default function PostDetail() {
     }
   };
 
+  // const getLike = async (like?: number) => {
+  //   if (like) {
+  //     //document의 like 불러옴
+  //     const docRef = doc(db, "posts", like);
+  //     const docSnap = await getDoc(docRef);
+
+  //     setPost({ id: docSnap.id, ...(docSnap.data() as PostProps) });
+  //   }
+  // };
+
   const handleDelete = async () => {
     const deleteConfirm = window.confirm("해당 게시글을 삭제하시겠습니까?");
     if (deleteConfirm && post && post.id) {
@@ -63,7 +73,7 @@ export default function PostDetail() {
           <div className="post__text post__text-pre-wrap">{post?.content}</div>
         </div>
         {/* 댓글이 변경되었을 때 변경된 data를 불러올 수 있도록 getPost 추가 */}
-        {/* <LikeButton post={post}/> */}
+        <LikeButton post={post} getPost={getPost} user={user} />
         <Comments post={post} getPost={getPost} />
       </div>
     </>
