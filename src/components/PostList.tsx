@@ -78,17 +78,33 @@ export default function PostList({
         where("uid", "==", user.uid),
         orderBy("createdAt", "desc")
       );
-    } // 모든 게시글
+    }
+
+    // 모든 게시글
     else if (activeTab === "all") {
       postsQuery = query(postsRef, orderBy("createdAt", "desc"));
-    } // 좋아요 누른 게시글
+    }
+
+    // 좋아요 누른 게시글
     else if (activeTab === "like" && user) {
       postsQuery = query(
         postsRef,
-        where("likePostList.index", "==", 0),
+        where("likePostList.uid", "==", user.uid),
         orderBy("createdAt", "desc")
       );
-    } else {
+      // const allPosts = await getDocs(postsRef);
+      // const likedPosts = allPosts.docs.filter((doc) => {
+      //   const likePostList = doc.data().likePostList;
+
+      //   // likePostList 배열에서 uid가 일치하는지 확인
+      //   return likePostList.some(
+      //     (item: { uid: string }) => item.uid === user.uid
+      //   );
+      // });
+    }
+
+    // 각 카테고리 글 정렬
+    else {
       postsQuery = query(
         postsRef,
         where("category", "==", activeTab),
@@ -134,13 +150,13 @@ export default function PostList({
           >
             나의 글
           </div>
-          {/* <div
+          <div
             role="presentation"
             onClick={() => setActiveTab("like")}
             className={activeTab === "like" ? "post__navigation-active" : ""}
           >
             좋아요
-          </div> */}
+          </div>
           {CATEGORIES?.map((category) => (
             <div
               key={category}

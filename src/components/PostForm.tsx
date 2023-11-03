@@ -6,17 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CATEGORIES, CategoryType, PostProps } from "./PostList";
 
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 export default function PostForm() {
   const params = useParams();
   const [post, setPost] = useState<PostProps | null>(null);
   const [title, setTitle] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const [category, setCategory] = useState<CategoryType>("Frontend");
+  const [category, setCategory] = useState<CategoryType>();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 

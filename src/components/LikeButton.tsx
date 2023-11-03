@@ -53,8 +53,6 @@ export default function LikeButton({ post, getPost, user }: LikeButtonProps) {
               ...post.likePostList,
               {
                 uid: user.uid,
-                email: user.email,
-                createdAt: new Date().toISOString(),
               },
             ],
           });
