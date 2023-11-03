@@ -24,39 +24,6 @@ interface LikeButtonProps {
 
 export default function LikeButton({ post, getPost, user }: LikeButtonProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  // const [likePost, setLikePost] = useState([]);
-
-  // const handleLike = async () => {
-  //   if (post && post.id && user) {
-
-  //     if (!isLiked) {
-  //       // 좋아요 추가
-  //       console.log("좋아요 완료");
-  //       const likeData = {
-  //         uid: user.uid,
-  //         content: post.id,
-  //       };
-  //       const likeRef = await addDoc(collection(db, "likes"), likeData);
-
-  //       const postRef = doc(db, "posts", post.id);
-  //       await updateDoc(postRef, {
-  //         like: post.like + 1,
-  //         likePost: [{ id: likeRef.id, ...likeData }],
-  //       });
-  //       setIsLiked(true);
-  //       await getPost(post.id);
-  //     } else {
-  //       console.log("좋아요 취소 완료");
-  //       const postRef = doc(db, "posts", post.id);
-  //       await updateDoc(postRef, {
-  //         like: post.like - 1,
-  //         // likePost: arrayUnion(likeData),
-  //         // likePost: post.likePost.filter((like) => like.uid == user.uid),
-  //       });
-  //       setIsLiked(false);
-  //       await getPost(post.id);
-  //     }
-  //   }
 
   const handleLike = async () => {
     if (post) {

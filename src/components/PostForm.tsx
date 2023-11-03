@@ -6,6 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CATEGORIES, CategoryType, PostProps } from "./PostList";
 
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 export default function PostForm() {
   const params = useParams();
   const [post, setPost] = useState<PostProps | null>(null);
@@ -128,30 +132,31 @@ export default function PostForm() {
             ))}
           </select>
         </div>
-        <label htmlFor="title">제목</label>
         <input
+          className="title"
           type="text"
           name="title"
           id="title"
           required
           onChange={onChange}
           value={title}
+          placeholder="제목을 입력하세요."
         />
       </div>
 
       <div className="form__block">
-        <label htmlFor="summary">요약</label>
         <input
+          className="subtitle"
           type="text"
           name="summary"
           id="summary"
           required
           onChange={onChange}
           value={summary}
+          placeholder="부제목을 입력하세요."
         />
       </div>
       <div className="form__block">
-        <label htmlFor="content">내용</label>
         <textarea
           name="content"
           id="content"
@@ -162,7 +167,7 @@ export default function PostForm() {
       </div>
 
       <div className="form__block">
-        <input type="submit" value="제출" className="form__btn-submit" />
+        <input type="submit" value="저장" className="form__btn-submit" />
       </div>
     </form>
   );

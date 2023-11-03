@@ -134,13 +134,13 @@ export default function PostList({
           >
             나의 글
           </div>
-          <div
+          {/* <div
             role="presentation"
             onClick={() => setActiveTab("like")}
             className={activeTab === "like" ? "post__navigation-active" : ""}
           >
             좋아요
-          </div>
+          </div> */}
           {CATEGORIES?.map((category) => (
             <div
               key={category}
