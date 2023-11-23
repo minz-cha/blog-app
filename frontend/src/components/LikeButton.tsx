@@ -8,7 +8,6 @@ import {
   collection,
 } from "firebase/firestore";
 import { db } from "firebaseApp";
-import AuthContext from "context/AuthContext";
 import { LikeInterface, PostProps } from "./PostList";
 
 import { Button } from "@mui/material";
