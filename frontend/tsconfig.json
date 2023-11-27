@@ -3,7 +3,7 @@
     "target": "es2016",
     "module": "commonjs",
     "baseUrl": "src",
-    "types": ["axios"],
+    "types": [],
     "paths": {
       "pages/*": ["pages/*"],
       "components/*": ["components/*"],

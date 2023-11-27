@@ -68,7 +68,6 @@ export default function SignupForm() {
       // const auth = getAuth(app);
       // await createUserWithEmailAndPassword(auth, email, password);
       // if (loggedInUser === 200) {
-      // 로그인 성공
       toast("회원가입에 성공하였습니다.");
       navigate("/login");
       // }
