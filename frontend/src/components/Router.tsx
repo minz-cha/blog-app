@@ -17,7 +17,7 @@ export default function Router({ isAuthenticated }: RouterProps) {
   return (
     <>
       <Routes>
-        {isAuthenticated ? (
+        {/* {isAuthenticated ? (
           <>
             <Route path="/" element={<Home />} />
             <Route path="/posts" element={<PostList />} />
@@ -32,6 +32,17 @@ export default function Router({ isAuthenticated }: RouterProps) {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="*" element={<LoginPage />} />
+          </>
+        )} */}
+        <Route path="/" element={<Home />} />
+        {isAuthenticated ? (
+          <>
+            <Route path="*" element={<Navigate replace to="/" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
           </>
         )}
       </Routes>

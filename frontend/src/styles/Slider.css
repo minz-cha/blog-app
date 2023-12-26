@@ -1,0 +1,14 @@
+.slider {
+  display: flex;
+  align-items: center;
+}
+
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.3s ease-out;
+}
+
+.card {
+  flex: none;
+  width: 100%; /* 카드의 너비를 필요에 맞게 조정 */
+}
