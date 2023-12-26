@@ -81,7 +81,7 @@
   color: gray;
 }
 
-.btn-category:focus {
+.btn-category.focused {
   background-color: black;
   color: white;
 }

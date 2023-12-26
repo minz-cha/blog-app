@@ -10,15 +10,19 @@ export function MainSample() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [selectedCategory, setSelectedCategory] = useState(0);
 
-  const postMenus = ["주간 인기 포스트", "새로 나온 포스트"];
-  const submenus = ["홈", "포스트", "스토어"];
-  const categories = ["태그1", "태그2", "태그3", "태그길이긴것"];
+  const postMenus: string[] = ["주간 인기 포스트", "새로 나온 포스트"];
+  const submenus: string[] = ["홈", "포스트", "스토어"];
+  const categories: string[] = ["태그1", "태그2", "태그3", "태그길이긴것"];
   const contentList = [
     { title: "타이틀1", writer: "작성자1", tags: ["태그1", "태그2"] },
     { title: "타이틀2", writer: "작성자2", tags: ["태그2", "태그3"] },
     { title: "타이틀3", writer: "작성자3", tags: ["태그2", "태그3", "태그4"] },
     { title: "타이틀4", writer: "작성자4", tags: ["태그1", "태그2", "태그4"] },
   ];
+
+  const [selectedCategories, setSelectedCategories] = useState<number[][]>(
+    postMenus.map(() => new Array(categories.length).fill(-1))
+  );
 
   const handleLogin = () => {
     // navigate("/login");
@@ -37,8 +41,16 @@ export function MainSample() {
     }
   };
 
-  const handleCategory = (index: number) => {
-    setSelectedCategory(index);
+  const handleCategory = (postMenuIndex: number, categoryIndex: number) => {
+    const newSelectedCategories = selectedCategories.map(
+      (categoryState, index) =>
+        index === postMenuIndex
+          ? categoryState.map((_, catIndex) =>
+              catIndex === categoryIndex ? categoryIndex : -1
+            )
+          : categoryState
+    );
+    setSelectedCategories(newSelectedCategories);
   };
 
   return (
@@ -91,17 +103,22 @@ export function MainSample() {
             ))}
           </div>
         </div>
-        {postMenus.map((item, index) => (
-          <div className="content-wrapper">
-            <div className="content-title">{postMenus[index]}</div>
+        {postMenus.map((menu, postMenuIndex) => (
+          <div className="content-wrapper" key={menu}>
+            <div className="content-title">{menu}</div>
             <div className="category-block">
-              {categories.map((item, index) => (
+              {categories.map((category, categoryIndex) => (
                 <button
-                  className="btn-category"
+                  key={category}
+                  className={`btn-category ${
+                    selectedCategories[postMenuIndex][categoryIndex] !== -1
+                      ? "focused"
+                      : ""
+                  }`}
                   type="button"
-                  onClick={() => handleCategory(index)}
+                  onClick={() => handleCategory(postMenuIndex, categoryIndex)}
                 >
-                  {categories[index]}
+                  {category}
                 </button>
               ))}
             </div>
