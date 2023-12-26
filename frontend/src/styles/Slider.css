@@ -1,14 +1,22 @@
 .slider {
+  width: 1000px;
+  height: 100px;
   display: flex;
   align-items: center;
 }
 
 .slider-wrapper {
+  width: 900px;
+  height: 100%;
   display: flex;
   transition: transform 0.3s ease-out;
 }
 
 .card {
-  flex: none;
-  width: 100%; /* 카드의 너비를 필요에 맞게 조정 */
+  width: 1000px;
+}
+
+.slider button {
+  border-style: none;
+  height: 100%;
 }

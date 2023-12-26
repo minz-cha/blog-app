@@ -4,6 +4,9 @@ import "../styles/Main.css";
 import dummyImage from "assets/dummy-image.jpg";
 import { useRecoilState } from "recoil";
 import { loginState } from "atom";
+import Slider from "./Slider";
+import "styles/Slider.css";
+import SliderSample from "./SliderSample";
 
 export function MainSample() {
   const navigate = useNavigate();
@@ -53,6 +56,14 @@ export function MainSample() {
     setSelectedCategories(newSelectedCategories);
   };
 
+  const handleSubscribe = () => {
+    if (isLogin) {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <>
       <div className="main-wrapper">
@@ -60,7 +71,11 @@ export function MainSample() {
           <div className="main-menu">
             <div className="main-left-menu">
               타이틀
-              <button className="btn-subscribe" type="button">
+              <button
+                className="btn-subscribe"
+                type="button"
+                onClick={handleSubscribe}
+              >
                 구독
               </button>
             </div>
@@ -103,6 +118,13 @@ export function MainSample() {
             ))}
           </div>
         </div>
+        {/* <Slider>
+          <div className="card">Card 1</div>
+          <div className="card">Card 2</div>
+          <div className="card">Card 3</div>
+          <div className="card">Card 4</div>
+        </Slider> */}
+        <SliderSample />
         {postMenus.map((menu, postMenuIndex) => (
           <div className="content-wrapper" key={menu}>
             <div className="content-title">{menu}</div>
@@ -141,13 +163,6 @@ export function MainSample() {
           </div>
         ))}
       </div>
-
-      {/* <Slider>
-        <div className="card">Card 1</div>
-        <div className="card">Card 2</div>
-        <div className="card">Card 3</div>
-        <div className="card">Card 4</div>
-      </Slider> */}
     </>
   );
 }
