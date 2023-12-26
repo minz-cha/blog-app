@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var db = require("../../db");
 
-router.post("/signup", (req, res) => {
+router.post("/", (req, res) => {
   const { email, password } = req.body;
 
   const query = "INSERT INTO users (email, password) VALUES (?, ?)";

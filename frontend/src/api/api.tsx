@@ -42,7 +42,7 @@ export const postData = async <T,>(
 // 회원가입
 export async function signup(formData: { email: string; password: string }) {
   try {
-    const response = await axios.post("/signup", formData);
+    const response = await client.post("/signup", formData);
     console.log(response);
     return response;
   } catch (error) {
