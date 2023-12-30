@@ -49,3 +49,12 @@ export async function signup(formData: { email: string; password: string }) {
     console.log(error);
   }
 }
+
+export async function login(formData: { email: string; password: string }) {
+  try {
+    const response = await client.post("/login", formData);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}

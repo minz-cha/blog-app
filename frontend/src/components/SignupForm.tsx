@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { app } from "firebaseApp";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { signup } from "api/api";
 
@@ -65,12 +63,8 @@ export default function SignupForm() {
     signup(formData);
 
     try {
-      // const auth = getAuth(app);
-      // await createUserWithEmailAndPassword(auth, email, password);
-      // if (loggedInUser === 200) {
       toast("회원가입에 성공하였습니다.");
       navigate("/login");
-      // }
     } catch (error: any) {
       toast.error(error?.code);
       console.log(error);

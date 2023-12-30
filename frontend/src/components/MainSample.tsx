@@ -28,8 +28,8 @@ export function MainSample() {
   );
 
   const handleLogin = () => {
-    // navigate("/login");
-    setIsLogin(true); //로그인 성공
+    navigate("/login");
+    // setIsLogin(true); //로그인 성공
   };
 
   const handleRegister = () => {
