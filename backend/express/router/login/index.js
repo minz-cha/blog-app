@@ -11,8 +11,11 @@ router.post("/", (req, res) => {
             console.error(err);
             res.status(500).json({ error: "로그인 실패" });
             return;
+        }
+        if (results.length > 0) {
+            res.status(200).send("로그인 성공")
         } else {
-            res.status(200).send("로그인 성공");
+            res.status(401).json({ error: "잘못된 이메일 또는 비밀번호" })
         }
     });
 });

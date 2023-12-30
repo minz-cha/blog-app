@@ -12,11 +12,15 @@ export default function LoginForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(formData);
 
     try {
-      toast.success("로그인에 성공하였습니다.");
-      navigate("/");
+      const response = await login(formData);
+      if (response?.status === 200) {
+        toast.success("로그인에 성공하였습니다.");
+        navigate("/");
+      } else {
+        toast.error(`로그인 실패: ${response?.status}`);
+      }
     } catch (error: any) {
       toast.error(error?.code);
       console.log(error);
@@ -31,7 +35,6 @@ export default function LoginForm() {
 
     if (name === "email") {
       setEmail(value);
-
       const emailRegex = /^[a-zA-Z0-9-_]+@[a-zA-Z.]+$/;
 
       if (!value?.match(emailRegex)) {

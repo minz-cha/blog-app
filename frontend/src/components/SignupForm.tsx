@@ -19,7 +19,6 @@ export default function SignupForm() {
 
     if (name === "email") {
       setEmail(value);
-      console.log(value);
       const emailRegex = /^[a-zA-Z0-9-_]+@[a-zA-Z.]+$/;
 
       if (!value?.match(emailRegex)) {
@@ -60,9 +59,9 @@ export default function SignupForm() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signup(formData);
 
     try {
+      signup(formData);
       toast("회원가입에 성공하였습니다.");
       navigate("/login");
     } catch (error: any) {

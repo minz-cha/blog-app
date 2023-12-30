@@ -50,10 +50,12 @@ export async function signup(formData: { email: string; password: string }) {
   }
 }
 
+// 로그인
 export async function login(formData: { email: string; password: string }) {
   try {
     const response = await client.post("/login", formData);
     console.log(response);
+    return response;
   } catch (error) {
     console.log(error);
   }
