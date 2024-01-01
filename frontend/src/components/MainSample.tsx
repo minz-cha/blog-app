@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Main.css";
 import dummyImage from "assets/dummy-image.jpg";
@@ -7,6 +7,17 @@ import { loginState } from "atom";
 import Slider from "./Slider";
 import "styles/Slider.css";
 import SliderSample from "./SliderSample";
+import { getPosts } from "api/api";
+
+const fetchPosts = async () => {
+  try {
+    const response = await getPosts();
+    console.log(response);
+    return response?.data;
+  } catch (error) {
+    console.error("게시글을 불러오는 데 실패했습니다.", error);
+  }
+};
 
 export function MainSample() {
   const navigate = useNavigate();

@@ -60,3 +60,14 @@ export async function login(formData: { email: string; password: string }) {
     console.log(error);
   }
 }
+
+// 게시글 get
+export async function getPosts() {
+  try {
+    const response = await client.get("/post");
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
